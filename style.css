@@ -1,0 +1,43 @@
+
+
+h1 {
+	color: red;
+}
+
+
+
+#calc {
+/*	display: flex;*/
+	background-color: black;
+	width: 200px;
+	height: 225px;
+	padding: 15px;
+	text-align: center;
+}
+
+
+#calcLigne5 {
+	border: 1px solid black;
+}
+
+/* placer le texte du placeholder de la calculatrice à droite */
+input::placeholder {
+	text-align: right;
+}
+
+.digits {
+	background-color: grey;
+}
+
+.operateurs {
+	background-color: orange;
+}
+
+.operateurs clicked {
+
+}
+
+.modifieurs {
+	background-color: red;
+	width: 45%;	
+}
