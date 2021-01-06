@@ -29,38 +29,39 @@
 		<section>
 			<h2>Calculatrice</h2>
 			<div id="calc">
-				<div>
-					<input type="text" id="afficheur" placeholder="0" readonly="yes">
-					<!-- readonly="yes" rend la zone de texte non modifiable, 
-					elle ne servira que pour afficher les résultats des calculs js -->
-				</div>
-				
-				<div id="calcLigne1">
-					<button class="digits" id="digit7">7</button>
-					<button class="digits" id="digit8">8</button>
-					<button class="digits" id="digit9">9</button>
-					<button class="operateurs" id="divise">/</button>
-				</div>
-				<div id="calcLigne2">
-					<button class="digits" id="digit4">4</button>
-					<button class="digits" id="digit5">5</button>
-					<button class="digits" id="digit6">6</button>
-					<button class="operateurs" id="fois">x</button>
-				</div>
-				<div id="calcLigne3">
-					<button class="digits" id="digit1">1</button>
-					<button class="digits" id="digit2">2</button>
-					<button class="digits" id="digit3">3</button>
-					<button class="operateurs" id="moins">-</button>
-				</div>
-				<div id="calcLigne4">
-					<button class="digits" id="digit0">0</button>
-					<button class="digits" id="point">.</button>
-					<button class="operateurs" id="plus">+</button>
-				</div>
-				<div id="calcLigne5">
-					<button class="modifieurs" id="reset">C</button>
-					<button class="modifieurs" id="egal">=</button>	
+				<div id="calcElements">
+					<div class="calcLigne">
+						<input type="text" id="afficheur" placeholder="0" readonly="yes">
+						<!-- readonly="yes" rend la zone de texte non modifiable, 
+						elle ne servira que pour afficher les résultats des calculs js -->
+					</div>
+					<div class="calcLigne" id="calcLigne1">
+						<button class="digits" id="digit7">7</button>
+						<button class="digits" id="digit8">8</button>
+						<button class="digits" id="digit9">9</button>
+						<button class="operateurs" id="divise">/</button>
+					</div>
+					<div class="calcLigne" id="calcLigne2">
+						<button class="digits" id="digit4">4</button>
+						<button class="digits" id="digit5">5</button>
+						<button class="digits" id="digit6">6</button>
+						<button class="operateurs" id="fois">x</button>
+					</div>
+					<div class="calcLigne" id="calcLigne3">
+						<button class="digits" id="digit1">1</button>
+						<button class="digits" id="digit2">2</button>
+						<button class="digits" id="digit3">3</button>
+						<button class="operateurs" id="moins">-</button>
+					</div>
+					<div class="calcLigne" id="calcLigne4">
+						<button class="digits" id="digit0">0</button>
+						<button class="digits" id="point">.</button>
+						<button class="operateurs" id="plus">+</button>
+					</div>
+					<div class="calcLigne" id="calcLigne5">
+						<button class="modifieurs" id="reset">C</button>
+						<button class="modifieurs" id="egal">=</button>	
+					</div>
 				</div>
 			</div>
 		</section>
