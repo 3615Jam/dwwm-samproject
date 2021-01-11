@@ -77,6 +77,10 @@ h1 {
 	width: 30px;
 }
 
+.operateurs:selected {
+	background-color: white;
+}
+
 .modifieurs {
 	background-color: slategrey;
 	width: 70px;
