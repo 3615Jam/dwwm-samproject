@@ -10,8 +10,6 @@
 
 let num1;
 
-
-
 // je créé une variable de type 'string' pour l'affichage du résultat dans l'input 'afficheur' 
 // j'utilise le type 'string' pour pouvoir ajouter les chiffres à la suite les uns des autres par concaténation :
 
@@ -23,7 +21,12 @@ let result = "";
 // et de l'afficher dans le placeholder de l'input html 'afficheur' : 
 
 function afficherResult() {
-	document.getElementById('afficheur').placeholder = Number(result);
+//	if(result === "0.") {
+//		document.getElementById('afficheur').placeholder = result;
+//	} else {
+		document.getElementById('afficheur').placeholder = Number(result);
+//	}
+	
 }
 
 /* 
@@ -33,12 +36,15 @@ soit je mettais 'result = "0";' dans l'initialisation mais lorsqu'on tapait le 1
 
 par la suite, j'ai trouvé que quand on converti une string vide en number, ça renvoie "0" ! 
 parfait pour mon souci, il m'a suffit de rajouter 'Number()' autour de 'result' ! 
-'resutl' est donc vide à l'initialisation mais 'Number('result');' affiche bien "0" dans l'afficheur, 
+'result' est donc vide à l'initialisation mais 'Number('result');' affiche bien "0" dans l'afficheur, 
 et ce "0" disparaitra lorsqu'on entrera notre 1er chiffre puisque 'result' ne sera plus vide ! 
 
 BONUS ! ça me règle aussi un second souci : avec une string, quand elle affiche "0" au chargement de la page, si j'appuie X fois sur "0", autant de "0" s'affichent !
 alors qu'avec une vraie calculette, tant qu'on est sur "0", elle n'en affiche qu'un seul, même si on appuie plusieurs fois dessus. 
 ça n'est plus le cas grâce à 'Number(result)', car 'Number("000000000")' renvoie juste "0" ;) 
+
+MALUS (en cours de résolution) ! ça me génère un autre souci : quand je veux taper "0.0..." tant que je ne tape pas un chiffre autre que "0",
+ça affiche juste "0" car 'Number(0.000.....)' renvoie "0" ! 
 
 */
 
@@ -98,14 +104,21 @@ document.getElementById('digit9').onclick = () => {
 	afficherResult();
 }
 
+// cas particulier du "0" quand en 1ere position : 
+// si on veut taper "0.09", on ne voit pas les "0" s'afficher car j'utilise 'Number(result)', qui affiche seulement "0" tant qu'aucun autre chiffre n'est tapé.
 document.getElementById('digit0').onclick = () => {
-	result += "0";
-	afficherResult();
+	if(result === ".") {
+		result += "0";
+		document.getElementById('afficheur').placeholder = `0${result}`;
+	} else {
+		result += "0";
+		afficherResult();
+	}
 }
 
 // cas particulier du "." : 
 // si on appuie sur "." en tout premier, avant n'importe quel autre bouton, cela affiche "NaN" car il convertit la string "." en number ! 
-// du coup, je rajoute un if : si result est vide, il rajoutera un "0" devant le "." --> si on tape ".9" cela affichera "0.9"
+// du coup, je rajoute un if : si 'result' est vide, il rajoutera un "0" devant le "." --> si on tape ".9" cela affichera "0.9"
 // sinon on affiche juste 'result' ajouté d'un "." : 
 document.getElementById('point').onclick = () => {
 	if(result === "") {
@@ -185,6 +198,7 @@ function executerCalcul() {
 document.getElementById('plus').onclick = () => {
 	preparerCalcul();
 	operateur = "plus";
+	// switcher couleur bouton 
 }
 
 document.getElementById('moins').onclick = () => {
