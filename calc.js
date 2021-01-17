@@ -6,27 +6,26 @@
 
 // 01 - INITIALISATION 
 
-// je créé 1 variable non définie ('undefined') que j'utiliserai pour les calculs : 
-
-let num1;
-
 // je créé une variable de type 'string' pour l'affichage du résultat dans l'input 'afficheur' 
 // j'utilise le type 'string' pour pouvoir ajouter les chiffres à la suite les uns des autres par concaténation :
 
 let result = "";
 
-
-
-// je crée une fonction dont le but est de récupérer la valeur de 'result' (après l'avoir convertie en number)
-// et de l'afficher dans le placeholder de l'input html 'afficheur' : 
+// je crée une fonction dont le but est de récupérer la valeur de 'result' 
+// et de l'afficher dans le placeholder de l'input html 'afficheur' 
+// si la valeur affichée n'est pas un nombre, je remplace "NaN" par "Error !"
+// sinon si 'result' est vide, j'affiche la valeur de 'result' convertie en Number, soit "0" car conversion en Number de string vide = "0"
+// sinon j'affiche juste 'result' :
 
 function afficherResult() {
-//	if(result === "0.") {
-//		document.getElementById('afficheur').placeholder = result;
-//	} else {
+	if(isNaN(result)){
+		result = "Error !";
+		document.getElementById('afficheur').placeholder = result;
+	} else if(result === "") {
 		document.getElementById('afficheur').placeholder = Number(result);
-//	}
-	
+	} else {
+		document.getElementById('afficheur').placeholder = result;
+	}	
 }
 
 /* 
@@ -45,10 +44,7 @@ alors qu'avec une vraie calculette, tant qu'on est sur "0", elle n'en affiche qu
 
 MALUS (en cours de résolution) ! ça me génère un autre souci : quand je veux taper "0.0..." tant que je ne tape pas un chiffre autre que "0",
 ça affiche juste "0" car 'Number(0.000.....)' renvoie "0" ! 
-
 */
-
-
 
 // - - - - - - - - - - - - - -
 
@@ -56,8 +52,8 @@ MALUS (en cours de résolution) ! ça me génère un autre souci : quand je veux
 
 // 02 - LES BOUTONS 'DIGITS' : 
 
-// je capte le clic sur un bouton 'digit' et attribut sa valeur à 'result' 
-// puis l'affiche dans input 'afficheur' grâce à la fonction 'afficherResult()' : 
+// je capte le clic sur un bouton 'digit' et rajoute sa valeur à 'result' par concaténation
+// puis je l'affiche dans mon input HTML 'afficheur' grâce à la fonction 'afficherResult()' : 
 
 document.getElementById('digit1').onclick = () => {
 	result += "1";
@@ -105,25 +101,26 @@ document.getElementById('digit9').onclick = () => {
 }
 
 // cas particulier du "0" quand en 1ere position : 
-// si on veut taper "0.09", on ne voit pas les "0" s'afficher car j'utilise 'Number(result)', qui affiche seulement "0" tant qu'aucun autre chiffre n'est tapé.
+// si on veut taper "0.0009", on ne voit pas les "0" s'afficher au fur et à mesure que l'on tape car j'utilise 'Number(result)', qui affiche seulement "0" tant qu'aucun autre chiffre n'est tapé (le bon résultat s'affiche dès qu'on tape autre chose que "0")
+// du coup je rajoute un if : si 'result' === "", on ne fait rien ('instruction vide' --> ";"), sinon on concatène "0" avec 'result' :
 document.getElementById('digit0').onclick = () => {
-	if(result === ".") {
-		result += "0";
-		document.getElementById('afficheur').placeholder = `0${result}`;
+	if(result === "") { 
+		/* instruction vide = rien à faire */
+		;
 	} else {
 		result += "0";
 		afficherResult();
 	}
 }
 
-// cas particulier du "." : 
+// cas particulier du "." quand en 1ere position : 
 // si on appuie sur "." en tout premier, avant n'importe quel autre bouton, cela affiche "NaN" car il convertit la string "." en number ! 
 // du coup, je rajoute un if : si 'result' est vide, il rajoutera un "0" devant le "." --> si on tape ".9" cela affichera "0.9"
 // sinon on affiche juste 'result' ajouté d'un "." : 
 document.getElementById('point').onclick = () => {
 	if(result === "") {
-		result += ".";
-		document.getElementById('afficheur').placeholder = `0${result}`;
+		result = "0.";
+		afficherResult();
 	} else {
 		result += ".";
 		afficherResult();	
@@ -136,7 +133,11 @@ document.getElementById('point').onclick = () => {
 
 
 
-// 03 - LES BOUTONS 'OPERATEURS' : 
+// 03 - LES BOUTONS 'OPERATEURS' ET LES CALCULS : 
+
+// je créé 1 variable non définie ('undefined') que j'utiliserai pour les calculs : 
+
+let num1;
 
 // je crée une variable 'operateur' qui changera en fonction du bouton operateur cliqué : 
 
@@ -196,24 +197,40 @@ function executerCalcul() {
 // à chaque fois que je clique sur un bouton opérateur, je change la valeur de la variable 'operateur' pour savoir quelle opération effectuer : 
 
 document.getElementById('plus').onclick = () => {
-	preparerCalcul();
-	operateur = "plus";
-	// switcher couleur bouton 
+	if(result === "Error !") {
+		afficherResult;
+	} else {
+		preparerCalcul();
+		operateur = "plus";
+		// switcher couleur bouton 
+	}
 }
 
 document.getElementById('moins').onclick = () => {
-	preparerCalcul();
-	operateur = "moins";
+	if(result === "Error !") {
+		afficherResult;
+	} else {
+		preparerCalcul();
+		operateur = "moins";
+	}
 }
 
 document.getElementById('fois').onclick = () => {
-	preparerCalcul();
-	operateur = "fois";
+	if(result === "Error !") {
+		afficherResult;
+	} else {
+		preparerCalcul();
+		operateur = "fois";
+	}
 }
 
 document.getElementById('divise').onclick = () => {
-	preparerCalcul();
-	operateur = "divise";
+	if(result === "Error !") {
+		afficherResult;
+	} else {
+		preparerCalcul();
+		operateur = "divise";
+	}
 }
 
 
