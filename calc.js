@@ -12,7 +12,7 @@
 let result = "";
 
 // je crée une fonction dont le but est de récupérer la valeur de 'result' 
-// et de l'afficher dans le placeholder de l'input html 'afficheur' 
+// et de l'afficher dans le placeholder de 'afficheur' 
 // si la valeur affichée n'est pas un nombre, je remplace "NaN" par "Error !"
 // sinon si 'result' est vide, j'affiche la valeur de 'result' convertie en Number, soit "0" car conversion en Number de string vide = "0"
 // sinon j'affiche juste 'result' :
@@ -102,7 +102,8 @@ document.getElementById('digit9').onclick = () => {
 
 // cas particulier du "0" quand en 1ere position : 
 // si on veut taper "0.0009", on ne voit pas les "0" s'afficher au fur et à mesure que l'on tape car j'utilise 'Number(result)', qui affiche seulement "0" tant qu'aucun autre chiffre n'est tapé (le bon résultat s'affiche dès qu'on tape autre chose que "0")
-// du coup je rajoute un if : si 'result' === "", on ne fait rien ('instruction vide' --> ";"), sinon on concatène "0" avec 'result' :
+// du coup je rajoute un if : si 'result' === "", on ne fait rien ('instruction vide' --> ";") 
+// sinon on concatène "0" avec 'result' :
 document.getElementById('digit0').onclick = () => {
 	if(result === "") { 
 		/* instruction vide = rien à faire */
@@ -143,24 +144,20 @@ let num1;
 
 let operateur; 
 
-
-
 // je crée une fonction qui prépare le calcul en envoyant la conversion en number de 'result' dans 'num1' si celle-ci est 'undefined' (comme en début de code), 
-// ou dans 'num2' si 'num1' n'est plus 'undefined' : 
+// sinon on execute le calcul, on affiche son résultat, puis on envoie ce nouveau résultat dans num1 pour la suite du calcul, enfin on remet 'result' en string vide : 
 
 function preparerCalcul() {
 	if(num1 === undefined) {
 		num1 = Number(result);
 		result = "";
 	} else {
-		// num2 = Number(result);
-		executerCalcul(); 			// --> result = num1 'operateur' Number(result); 
-		afficherResult();			// j'affiche 'result' dans 'afficheur'
-		num1 = Number(result);		// je conserve le résultat du calcul précédent dans 'num1' au cas où on relance un nouveau calcul 
-		result = "";				// je remets 'result' en string vide 
+		executerCalcul();
+		afficherResult();
+		num1 = Number(result);
+		result = "";
 	}
 }
-
 
 // je crée une fonction qui effectuera le calcul 
 // avec un switch en fonction de l'opérateur cliqué : 
@@ -192,9 +189,7 @@ function executerCalcul() {
 	}
 }
 
-
-
-// à chaque fois que je clique sur un bouton opérateur, je change la valeur de la variable 'operateur' pour savoir quelle opération effectuer : 
+// à chaque fois que je clique sur un bouton opérateur, si 'result' n'affiche pas "Error !" (auquel cas je ne fais rien d'autre qu'afficher le message d'erreur), je prépare le calcul et je change la valeur de la variable 'operateur' pour savoir quelle opération effectuer : 
 
 document.getElementById('plus').onclick = () => {
 	if(result === "Error !") {
@@ -202,7 +197,7 @@ document.getElementById('plus').onclick = () => {
 	} else {
 		preparerCalcul();
 		operateur = "plus";
-		// switcher couleur bouton 
+		// [WIP] switcher couleur bouton 
 	}
 }
 
@@ -236,6 +231,13 @@ document.getElementById('divise').onclick = () => {
 
 
 /*
+
+// - - - - - - - - - - - - - -
+Tout ce qui suit est conservé juste pour voir l'évolution de la logique du code ^^'
+// - - - - - - - - - - - - - -
+
+
+
 // puis je crée une fonction qui calculera 'num1' et 'num2' : 
 
 const executerCalcul = () => {
@@ -244,27 +246,21 @@ const executerCalcul = () => {
 	document.getElementById('fois').onclick = () => multiplier(num1, num2);
 	document.getElementById('divise').onclick = () => diviser(num1, num2);
 }
-*/
-
-
-
-	
-
 
 
 
 // version longue --> chaque opérateur : 
-/*
+
 document.getElementById('plus').onclick = () => {
 	if(num1 === undefined) { 						// si num1 est vide 
 		num1 = Number(result);						// envoie la conversion en number de la string 'result' dans 'num1' 
-		result = "";								// puis remets 'result' vide 
+		result = "";									// puis remets 'result' vide 
 	} else {										// sinon
 		num2 = Number(result);						// envoie la conversion en number de la string 'result' dans 'num2' 
 		result = num1 + num2;						// puis additionne num1 et num2 
 		afficherResult();							// puis affiche 'result' dans 'afficheur'
 		num1 = result; 								// puis envoie 'result' dans 'num1' au cas où on relance une nouvelle opération 
-		result = "";								// puis remets 'result' vide 
+		result = "";									// puis remets 'result' vide 
 	}
 }
 
@@ -306,17 +302,9 @@ document.getElementById('divise').onclick = () => {
 		result = "";
 	}
 }
-*/
 
 
 
-
-
-
-
-
-
-/*
 // version : quand je clique sur n'importe quel 'operateur' : 
 
 let boutonsOperateurs = document.getElementsByClassName('operateurs');
@@ -324,7 +312,6 @@ let boutonsOperateurs = document.getElementsByClassName('operateurs');
 for (let element of boutonsOperateurs) {
 	element.onclick = () => preparerCalcul();
 }
-
 
 const preparerCalcul = () => {
 	if(num1 === undefined) {
@@ -351,17 +338,11 @@ const preparerCalcul = () => {
 		
 	}	
 }
-*/
 
 
 
+// encore une autre version : 
 
-
-
-
-
-
-/*
 const additionner = () => result = num1 + num2;
 const soustraire  = () => result = num1 - num2;
 const multiplier  = () => result = num1 * num2;
@@ -371,26 +352,8 @@ document.getElementById('plus').onclick   = () => additionner();
 document.getElementById('moins').onclick  = () => soustraire();
 document.getElementById('fois').onclick   = () => multiplier();
 document.getElementById('divise').onclick = () => diviser();
-*/ 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+*/
 
 
 
@@ -400,17 +363,15 @@ document.getElementById('divise').onclick = () => diviser();
 
 // 04 - LES BOUTONS 'MODIFIEURS' : 
 
+// bouton "=" : on effectue le calcul puis on remet 'operateur' à 'neutre' pour l'éventuel calcul suivant : 
 document.getElementById('egal').onclick = () => {
-
 	preparerCalcul();
 	operateur = "neutre";
 }
 
+// bouton "C" (reset) : 
 
-
-
-
-
+// 1ere version : 
 
 /*
 // lors du clic sur 'reset', si on met 'result = 0', il affichera le "O" devant la prochaine entrée de chiffre.
@@ -424,7 +385,8 @@ document.getElementById('reset').onclick = () => {
 }
 */
 
-// variante 'reset' : 
+// variante simplifiée : 
+
 document.getElementById('reset').onclick = () => {
 	num1 = undefined;
 	result = "";
@@ -434,36 +396,36 @@ document.getElementById('reset').onclick = () => {
 
 
 // - - - - - - - - - - - - - -
+// - - - - - - - - - - - - - -
+// - - - - - - - - - - - - - -
+// - - - - - - - - - - - - - -
+// - - - - - - - - - - - - - -
 
 
 
 // - - - - - - - - - - - - - -
-/* 		TO DO : 
+/* 		BUGS : 
 // - - - - - - - - - - - - - -
 
-[BUG] quand on veut taper "0.009", il n'affiche pas les "0" tant qu'on ne met pas un autre chiffre (à cause du 'Number(result)')
+[WIP] "Error !" #1, avec 2x "." : quand on tape 2x sur "." cela affiche "Error !", je voudrais juste désactiver le "." s'il a été tapé une fois déjà
 
-[AJOUT] changer la couleur de l'opérateur cliqué 
+[WIP] "Error !" #2, avec "/" : à l'initialisation, quand je clique sur "/" il envoie 'Number("")' donc "0" à 'num1', et si je clique à nouveau sur "/" ou sur "=", il fait le calcul "O/O" qui renvoie "Error !" (= NaN) ; mais dans la fonction, il vide 'result' (= "") donc si on tape un nouveau chiffre, il l'affiche direct, alors que je voudrais que "Error !" reste affiché jusqu'à ce qu'on reset le tout ( "C" ) - - ce bug ainsi que le précédent seront résolus si j'arrive à implémenter la feature qui consiste à neutraliser les appuis sur un opérateur quand celui-ci est déjà "cliqué"
 
-[AJOUT] quand on appuie sur un opérateur, on ne doit plus pouvoir appuyer sur le même, et si on clique sur un autre, ça le remplace 
-
-[AJOUT] possibilité de modifier le dernier chiffre (touche "C") au lieu de tout effacer (touche "AC") 
-
-[AJOUT] taper avec les chiffres / opérateurs du clavier 
+[FIXED] "00000" : quand on veut taper "0.009", il n'affiche pas les "0" tant qu'on ne met pas un autre chiffre à cause du 'Number(result)'
 
 
 
-TESTS : pour vérifier les valeurs des variables : 
-
-console.log(result);
-console.log(num1);
-console.log(operateur);
+// - - - - - - - - - - - - - -
+/* 		FEATURES : 
+// - - - - - - - - - - - - - -
 
 
+- changer la couleur de l'opérateur cliqué 
 
+- quand on appuie sur un opérateur, on ne doit plus pouvoir appuyer sur le même, et si on clique sur un autre, ça le remplace 
 
+- possibilité de modifier le dernier chiffre (touche "C") au lieu de tout effacer (touche "AC") 
 
+- taper avec les chiffres / opérateurs du clavier 
 
 */
-
-
